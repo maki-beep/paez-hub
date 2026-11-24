@@ -1,0 +1,9 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Navigation icon">
+<path id="Book detail" d="M5.834 3.334V16.666M8.334 6.667H13.334M8.334 10H13.334" stroke-width="1.5" stroke-linecap="round" stroke="#9B9395"/>
+<mask id="stroke0_0_17" fill="white">
+<path d="M3.334 3.334H14.1662C14.8292 3.334 15.465 3.59737 15.9338 4.06616C16.4026 4.53495 16.666 5.17078 16.666 5.83375V16.666H5.83375C5.17078 16.666 4.53495 16.4026 4.06616 15.9338C3.59737 15.465 3.334 14.8292 3.334 14.1662V3.334Z"/>
+</mask>
+<path id="Book" d="M3.334 3.334H14.1662C14.8292 3.334 15.465 3.59737 15.9338 4.06616C16.4026 4.53495 16.666 5.17078 16.666 5.83375V16.666H5.83375C5.17078 16.666 4.53495 16.4026 4.06616 15.9338C3.59737 15.465 3.334 14.8292 3.334 14.1662V3.334Z" stroke-width="3" stroke-linecap="round" stroke="#9B9395" mask="url(#stroke0_0_17)"/>
+</g>
+</svg>

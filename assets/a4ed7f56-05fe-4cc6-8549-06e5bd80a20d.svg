@@ -1,0 +1,9 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Navigation icon">
+<mask id="stroke0_0_4" fill="white">
+<path d="M10 10C11.8413 10 13.334 8.50777 13.334 6.667C13.334 4.82623 11.8413 3.334 10 3.334C8.15868 3.334 6.666 4.82623 6.666 6.667C6.666 8.50777 8.15868 10 10 10Z"/>
+</mask>
+<path id="Head" d="M13.334 6.667C13.334 8.50777 11.8413 10 10 10C8.15868 10 6.666 8.50777 6.666 6.667C6.666 4.82623 8.15868 3.334 10 3.334C11.8413 3.334 13.334 4.82623 13.334 6.667Z" stroke-width="3" stroke-linecap="round" stroke="#9B9395" mask="url(#stroke0_0_4)"/>
+<path id="Person" d="M3.334 17.5C3.334 15.7321 4.03631 14.0365 5.28643 12.7864C6.53654 11.5363 8.23207 10.834 10 10.834C11.7679 10.834 13.4635 11.5363 14.7136 12.7864C15.9637 14.0365 16.666 15.7321 16.666 17.5" stroke-width="1.5" stroke-linecap="round" stroke="#9B9395"/>
+</g>
+</svg>

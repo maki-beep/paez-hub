@@ -1,0 +1,9 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Navigation icon">
+<mask id="stroke0_0_39" fill="white">
+<path d="M10.005 10C11.8469 10 13.34 8.50687 13.34 6.665C13.34 4.82313 11.8469 3.33 10.005 3.33C8.16313 3.33 6.67 4.82313 6.67 6.665C6.67 8.50687 8.16313 10 10.005 10Z"/>
+</mask>
+<path id="Symbol detail" d="M13.34 6.665C13.34 8.50687 11.8469 10 10.005 10C8.16313 10 6.67 8.50687 6.67 6.665C6.67 4.82313 8.16313 3.33 10.005 3.33C11.8469 3.33 13.34 4.82313 13.34 6.665Z" stroke-width="3" stroke-linecap="round" stroke="#9B9395" mask="url(#stroke0_0_39)"/>
+<path id="Symbol detail_2" d="M3.33 17.5C3.33 15.731 4.0322 14.0345 5.28213 12.7836C6.53206 11.5327 8.22733 10.83 9.995 10.83C11.7627 10.83 13.4579 11.5327 14.7079 12.7836C15.9578 14.0345 16.66 15.731 16.66 17.5" stroke-width="1.5" stroke-linecap="round" stroke="#9B9395"/>
+</g>
+</svg>

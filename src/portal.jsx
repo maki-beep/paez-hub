@@ -4,6 +4,17 @@ const SIGNUP = "264:90";
 const HOME = "264:257";
 const CLASSES = "264:398";
 const EXAM = "264:1139";
+const TASKS = "264:644";
+const PROFILE = "264:764";
+const ACCOUNT_CREATED = "264:1262";
+const portalSections = {
+  [HOME]: HOME,
+  [CLASSES]: CLASSES, "264:483": CLASSES, "264:1036": CLASSES, "264:1948": CLASSES,
+  "264:2028": CLASSES, "264:2077": CLASSES,
+  [TASKS]: TASKS, "264:916": TASKS, [EXAM]: TASKS, "264:1316": TASKS, "264:1490": TASKS,
+  [PROFILE]: PROFILE, "264:1766": PROFILE, "264:1806": PROFILE, "264:1863": PROFILE,
+  "264:1612": null,
+};
 const answers = ["264:1196", "264:1200", "264:1204", "264:1209"];
 const modules = new Set(["264:330","264:340","264:578","264:588","264:1697","264:1729"]);
 const routeMap = Object.fromEntries(PROTOTYPE.flatMap(([, controls]) =>
@@ -118,6 +129,48 @@ function H(tag, props, ...slots) {
   return id ? React.createElement(DesignNode,{key:props.key,tag,props,slots}) : React.createElement(tag,props,...slots);
 }
 
+function DesktopRail({ page, navigate }) {
+  const section = portalSections[page];
+  const tab = (target, label, icon) => {
+    const active = target === section;
+    return <button type="button" className="desktop-rail-tab portal-action"
+      aria-current={active ? "page" : undefined} onClick={() => navigate(target, true)}>
+      <span className="desktop-rail-icon">
+        <img src={`/assets/paez-nav-${icon}${active ? "-active" : ""}.svg`} alt=""/>
+      </span>
+      {label}
+    </button>;
+  };
+  return <nav className="desktop-rail" aria-label="Portal navigation">
+    <button type="button" className="desktop-rail-home portal-action" aria-label="Portal home"
+      onClick={() => navigate(HOME, true)}>
+      <img src="/assets/paez-rail-mark.png" alt=""/>
+    </button>
+    <div className="desktop-rail-primary">
+      {tab(HOME, "Home", "home")}
+      {tab(CLASSES, "Classes", "classes")}
+      {tab(TASKS, "Tasks", "tasks")}
+    </div>
+    <div className="desktop-rail-account">
+      <button type="button" className="desktop-rail-logout portal-action" aria-label="Logout"
+        onClick={() => navigate(START)}>
+        <img src="/assets/paez-nav-logout.svg" alt=""/>
+      </button>
+      {tab(PROFILE, "Profile", "profile")}
+    </div>
+  </nav>;
+}
+
+function DesktopBrand() {
+  return <aside className="desktop-brand">
+    <img className="desktop-brand-mark" src="/assets/paez-access-mark.png" alt=""/>
+    <div className="desktop-brand-identity">
+      <strong>PAEZ</strong>
+      <span>Student Portal</span>
+    </div>
+  </aside>;
+}
+
 function Shell() {
   const [page,setPage]=React.useState(START);
   const [enteredFromTab,setEnteredFromTab]=React.useState(false);
@@ -190,11 +243,16 @@ function Shell() {
 
   const Screen=SCREENS[page];
   const Overlay=SCREENS[modal];
+  const isAccountAccess = [START, SIGNUP, ACCOUNT_CREATED].includes(page);
+  const isWorkspace = Object.hasOwn(portalSections, page);
+  const layout = isAccountAccess ? "portal-access" : isWorkspace ? "portal-workspace" : "";
   const context={page,action,goHome:()=>navigate(HOME,true),seconds,answer,flag,confirmed,cleared,unread,filter,worksheets,setWorksheets};
   return <State.Provider value={context}>
-    <div className="portal-shell">
-      <main className={enteredFromTab ? "portal-screen portal-screen-tab-entry" : "portal-screen"} data-screen={page}>
+    <div className={`portal-shell ${layout}`}>
+      {isWorkspace && <DesktopRail page={page} navigate={navigate}/>}
+      <main className={`portal-screen ${layout}${enteredFromTab ? " portal-screen-tab-entry" : ""}`} data-screen={page}>
         <Screen key={page}/>
+        {isAccountAccess && <DesktopBrand/>}
       </main>
     </div>
     <dialog className="portal-dialog" ref={dialog} onCancel={()=>setModal(null)} aria-label="Portal dialog">

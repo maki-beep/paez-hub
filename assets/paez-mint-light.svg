@@ -1,0 +1,9 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="820" height="780" viewBox="0 0 820 780" fill="none" xmlns="http://www.w3.org/2000/svg">
+<ellipse id="Soft mint light" cx="410" cy="390" rx="410" ry="390" fill="url(#paint0_radial_0_12)"/>
+<defs>
+<radialGradient id="paint0_radial_0_12" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(410 390) scale(410 390)">
+<stop stop-color="#93D4B3" stop-opacity="0.8"/>
+<stop offset="1" stop-color="#93D4B3" stop-opacity="0"/>
+</radialGradient>
+</defs>
+</svg>

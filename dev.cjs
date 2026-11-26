@@ -39,7 +39,8 @@ function compile() {
   });
 
   const source = read("src/design-data.js") + "\nconst SCREENS = {\n" +
-    components.join(",\n") + "\n};\n" + transform(read("src/portal.jsx")) + liveReload;
+    components.join(",\n") + "\n};\n" + transform(read("src/admin.jsx")) + "\n" +
+    transform(read("src/portal.jsx")) + liveReload;
   new vm.Script(source);
   return source;
 }

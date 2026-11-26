@@ -161,18 +161,20 @@ function DesktopRail({ page, navigate }) {
   </nav>;
 }
 
-function DesktopBrand() {
+function DesktopBrand({adminMode}) {
   return <aside className="desktop-brand">
-    <img className="desktop-brand-mark" src="/assets/paez-access-mark.png" alt=""/>
+    <img className="desktop-brand-art" src="/assets/paez-brand.svg" alt=""/>
     <div className="desktop-brand-identity">
       <strong>PAEZ</strong>
-      <span>Student Portal</span>
+      <span>{adminMode ? "Admin Portal" : "Student Portal"}</span>
     </div>
   </aside>;
 }
 
 function Shell() {
   const [page,setPage]=React.useState(START);
+  const [adminMode,setAdminMode]=React.useState(false);
+  const [adminSession,setAdminSession]=React.useState(false);
   const [enteredFromTab,setEnteredFromTab]=React.useState(false);
   const [modal,setModal]=React.useState(null);
   const [prior,setPrior]=React.useState(HOME);
@@ -214,6 +216,11 @@ function Shell() {
   }
 
   function action(id,node){
+    if(page===START && adminMode && id==="264:80"){
+      setAdminSession(true);
+      window.scrollTo(0,0);
+      return;
+    }
     if(modules.has(id)){setNotice("This study module file has yet to be added.");return;}
     if(id==="264:432"||id==="264:1982"){
       if(!document.querySelector('[aria-label="Class code"]')?.value.trim()){setNotice("Enter a class code first.");return;}
@@ -246,13 +253,14 @@ function Shell() {
   const isAccountAccess = [START, SIGNUP, ACCOUNT_CREATED].includes(page);
   const isWorkspace = Object.hasOwn(portalSections, page);
   const layout = isAccountAccess ? "portal-access" : isWorkspace ? "portal-workspace" : "";
-  const context={page,action,goHome:()=>navigate(HOME,true),seconds,answer,flag,confirmed,cleared,unread,filter,worksheets,setWorksheets};
+  const context={page,action,adminMode,setAdminMode,goHome:()=>navigate(HOME,true),seconds,answer,flag,confirmed,cleared,unread,filter,worksheets,setWorksheets};
+  if(adminSession) return <AdminPortal onLogout={()=>{setAdminSession(false);window.scrollTo(0,0);}}/>;
   return <State.Provider value={context}>
     <div className={`portal-shell ${layout}`}>
       {isWorkspace && <DesktopRail page={page} navigate={navigate}/>}
-      <main className={`portal-screen ${layout}${enteredFromTab ? " portal-screen-tab-entry" : ""}`} data-screen={page}>
+      <main className={`portal-screen ${layout}${enteredFromTab ? " portal-screen-tab-entry" : ""}`} data-screen={page} data-access-role={adminMode ? "admin" : "student"}>
         <Screen key={page}/>
-        {isAccountAccess && <DesktopBrand/>}
+        {isAccountAccess && <DesktopBrand adminMode={page===START && adminMode}/>}
       </main>
     </div>
     <dialog className="portal-dialog" ref={dialog} onCancel={()=>setModal(null)} aria-label="Portal dialog">

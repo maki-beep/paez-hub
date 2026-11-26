@@ -5,13 +5,14 @@ const imgIcon1 = "./assets/5b34b89e-1905-4186-8f16-f5a03c1f8d3e.svg";
 const imgIcon2 = "./assets/11103be9-72f5-4637-b82f-fd9c0a988551.svg";
 
 export default function LoginPagePolished() {
+  const {adminMode, setAdminMode} = React.useContext(State);
   return (
     <div className="screen-264-16-login-page-polished" data-node-id="264:16" data-name="login page · Polished">
       <div className="screen-264-16-main-content" data-node-id="264:17" data-name="Main Content">
         <div className="screen-264-16-header" data-node-id="264:18" data-name="Header">
           <div className="screen-264-16-name-n-header" data-node-id="264:19" data-name="name n header">
             <p className="screen-264-16-p" data-node-id="264:20">
-              Student Portal
+              {adminMode ? "Admin Portal" : "Student Portal"}
             </p>
             <p className="screen-264-16-p-2" data-node-id="264:21">
               PAEZ
@@ -38,7 +39,7 @@ export default function LoginPagePolished() {
           <div className="screen-264-16-loginform" data-node-id="264:43" data-name="LoginForm">
             <div className="screen-264-16-container-2" data-node-id="264:44" data-name="Container">
               <p className="screen-264-16-p-3" data-node-id="264:45">
-                STUDENT ACCESS
+                {adminMode ? "ADMIN ACCESS" : "STUDENT ACCESS"}
               </p>
               <div className="screen-264-16-heading-2" data-node-id="264:46" data-name="Heading 2">
                 <p className="screen-264-16-p-4" data-node-id="264:47">
@@ -47,7 +48,7 @@ export default function LoginPagePolished() {
               </div>
               <div className="screen-264-16-paragraph" data-node-id="264:48" data-name="Paragraph">
                 <p className="screen-264-16-p-5" data-node-id="264:49">
-                  Log in to continue to your classroom dashboard.
+                  {adminMode ? "Log in to manage your classes and assessments." : "Log in to continue to your classroom dashboard."}
                 </p>
               </div>
             </div>
@@ -116,11 +117,11 @@ export default function LoginPagePolished() {
                 </a>
               </div>
             </div>
-            <a className="screen-264-16-container-margin" data-node-id="264:84" data-name="Container:margin">
+            {!adminMode && <a className="screen-264-16-container-margin" data-node-id="264:84" data-name="Container:margin">
               <div className="screen-264-16-container-5" data-node-id="264:85" data-name="Container">
                 <div className="screen-264-16-text-2" data-node-id="264:86" data-name="Text">
                   <p className="screen-264-16-p-11" data-node-id="264:87">
-                    New to PUP-CORE?
+                    New to PAEZ?
                   </p>
                 </div>
                 <div className="screen-264-16-button" data-node-id="264:88" data-name="Button">
@@ -129,7 +130,10 @@ export default function LoginPagePolished() {
                   </p>
                 </div>
               </div>
-            </a>
+            </a>}
+            <button type="button" className="access-role-switch" onClick={()=>setAdminMode(!adminMode)}>
+              {adminMode ? "Switch to student mode" : "Switch to admin mode"}
+            </button>
           </div>
         </div>
       </div>

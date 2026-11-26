@@ -1,4 +1,5 @@
 export default function ForgotPasswordStep1VerifyAccount() {
+  const {adminMode} = React.useContext(State);
   return (
     <div className="screen-264-2136-forgot-password-step-1-verify-account" data-node-id="264:2136" data-name="Forgot password · Step 1 · Verify account">
       <p className="screen-264-2136-p" data-node-id="264:2137">
@@ -16,7 +17,7 @@ export default function ForgotPasswordStep1VerifyAccount() {
         </p>
         <div className="screen-264-2136-sample-input" data-node-id="264:2142" data-name="Sample input">
           <p className="screen-264-2136-p-3" data-node-id="264:2143">
-            student@example.edu
+            {adminMode ? "admin@example.edu" : "student@example.edu"}
           </p>
         </div>
       </div>

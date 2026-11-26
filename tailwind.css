@@ -7870,9 +7870,8 @@ html:has(.portal-screen :is([data-name="Navigation"], [data-name="Bottom navigat
 .admin-button { min-height: 36px; padding: 8px 14px; background: white; color: var(--admin-green); font-size: 13px; font-weight: 700; text-align: center; }
 .admin-button:hover { box-shadow: inset 0 0 0 1px currentColor; }
 .admin-button.primary { background: var(--admin-green); color: white; }
-.admin-button.success, .admin-button.warning, .admin-button.danger.filled { color: white; }
+.admin-button.success, .admin-button.danger.filled { color: white; }
 .admin-button.success { background: #237743; }
-.admin-button.warning { background: #a96e16; }
 .admin-button.danger { background: transparent; color: var(--admin-danger); }
 .admin-button.danger.filled { background: var(--admin-danger); }
 .admin-button.soft, .admin-button.admin-back { background: var(--admin-soft); }
@@ -7890,7 +7889,6 @@ html:has(.portal-screen :is([data-name="Navigation"], [data-name="Bottom navigat
 .admin-stats strong { font: 750 24px/1.35 Manrope,sans-serif; }
 .admin-stats small { color: var(--admin-muted); overflow-wrap: anywhere; }
 .admin-shell .present { color: #237743; }
-.admin-shell .late { color: #996005; }
 .admin-shell .absent { color: var(--admin-danger); }
 
 .admin-classes { row-gap: 14px; }
@@ -7931,8 +7929,6 @@ html:has(.portal-screen :is([data-name="Navigation"], [data-name="Bottom navigat
 .admin-setting span { color: var(--admin-muted); }
 .admin-monitor-list .admin-row { background: white; }
 .admin-monitor-list .admin-tabs { margin-bottom: 12px; }
-.admin-marks { flex-wrap: nowrap; gap: 8px; }
-.admin-marks .admin-button { width: 36px; padding: 0; }
 .admin-notifications { padding: 14px 18px; }
 .admin-notifications > div { display: flex; justify-content: space-between; align-items: center; color: var(--admin-green); }
 .admin-notifications article { position: relative; display: grid; gap: 3px; margin-top: 8px; padding: 12px 16px; border-radius: 20px; background: white; }
@@ -8002,8 +7998,7 @@ html:has(.portal-screen :is([data-name="Navigation"], [data-name="Bottom navigat
   .admin-live progress::-webkit-progress-bar { background: #fff; }
   .admin-live progress::-webkit-progress-value { background: var(--admin-green); border-radius: 8px; }
   .admin-live .admin-buttons { display: grid; }
-  .admin-live .admin-button, .admin-attendance-summary .admin-button, .admin-mobile-only > .admin-button { width: 100%; min-height: 40px; border-radius: 12px; }
-  .admin-attendance-summary .admin-button { background: var(--admin-soft); color: var(--admin-green); }
+  .admin-live .admin-button, .admin-mobile-only > .admin-button { width: 100%; min-height: 40px; border-radius: 12px; }
   .admin-stats { gap: 10px; }
   .admin-stats > div { text-align: center; gap: 0; padding: 7px 4px; border-radius: 12px; }
   .admin-live .admin-stats > div { background: white; }
@@ -8051,7 +8046,6 @@ html:has(.portal-screen :is([data-name="Navigation"], [data-name="Bottom navigat
   .admin-tabs .admin-button { min-height: 29px; padding: 5px 9px; font-size: 11px; }
   .admin-row-actions { gap: 5px; }
   .admin-row-actions .admin-button { min-height: 30px; font-size: 11px; }
-  .admin-marks .admin-button { width: 32px; }
   .admin-notifications article { font-size: 12px; }
   .admin-notifications article small, .admin-notifications article time { font-size: 9px; }
 }

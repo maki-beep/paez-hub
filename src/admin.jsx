@@ -5,21 +5,21 @@
   ["BM","Business Mathematics","ABM-A","BMATH-101",28],
 ];
 const adminStudents = [
-  ["MA","Aquino, Mark","Submitted","Submitted · 10:42 AM","P"],
-  ["RB","Bautista, Rina","In progress","Question 14 of 20","P"],
-  ["JC","Cruz, Jevon","Submitted","Submitted · 10:51 AM","L"],
-  ["AD","Dela Cruz, Anna","In progress","Question 9 of 20","P"],
-  ["KM","Ramos, Karylle","Submitted","Submitted · 10:38 AM","P"],
-  ["PR","Reyes, Paolo","Locked","Switched apps 3 times","A"],
-  ["LS","Santiago, Lea","Not started","Not started","P"],
-  ["JV","Villanueva, Joel","In progress","Question 17 of 20","L"],
-].map(([initials,name,status,detail,attendance],index)=>({initials,name,status,detail,attendance,number:"2024-00"+(110+index)+"-MN-0"}));
+  ["MA","Aquino, Mark","Submitted","Submitted · 10:42 AM"],
+  ["RB","Bautista, Rina","In progress","Question 14 of 20"],
+  ["JC","Cruz, Jevon","Submitted","Submitted · 10:51 AM"],
+  ["AD","Dela Cruz, Anna","In progress","Question 9 of 20"],
+  ["KM","Ramos, Karylle","Submitted","Submitted · 10:38 AM"],
+  ["PR","Reyes, Paolo","Locked","Switched apps 3 times"],
+  ["LS","Santiago, Lea","Not started","Not started"],
+  ["JV","Villanueva, Joel","In progress","Question 17 of 20"],
+].map(([initials,name,status,detail],index)=>({initials,name,status,detail,number:"2024-00"+(110+index)+"-MN-0"}));
 const adminResults = [["Ramos, K.",100,"Passed"],["Reyes, P.",92,"Passed"],["Cruz, J.",85,"Passed"],["Santiago, L.",58,"Failed"],["Villanueva, J.","–","Missing"]];
 const adminUpdates = [
   ["Exam submissions","Midterm Examination is in progress","18 of 30 students have submitted · Pre-Calculus · STEM-A","Open exam monitor","Exam Monitor","5 min ago"],
   ["Security flag","A student switched tabs during the exam","Reyes, Paolo switched apps 3 times.","View in monitor","Exam Monitor","12 min ago"],
   ["Sync","3 items are waiting to sync","Connect the Hub to the internet, then select Sync All.","Go to Sync All","Profile","1 hr ago"],
-  ["Results","Sync completed","Grades and attendance were backed up to the cloud.","View records","Records","1 day ago"],
+  ["Results","Sync completed","Grades were backed up to the cloud.","View records","Records","1 day ago"],
   ["Modules","Functions and Their Graphs.pdf was uploaded","Now visible to students in Pre-Calculus · STEM-A.","Open modules","Modules","1 day ago"],
 ];
 const adminIcon = {
@@ -59,8 +59,6 @@ function AdminPortal({onLogout}) {
   const [status,setStatus] = React.useState("");
   const [closed,setClosed] = React.useState(false);
   const [unlocked,setUnlocked] = React.useState([]);
-  const [attendance,setAttendance] = React.useState(adminStudents.map(student=>student.attendance));
-  const [allPresent,setAllPresent] = React.useState(false);
   const [examFilter,setExamFilter] = React.useState("All");
   const [notificationFilter,setNotificationFilter] = React.useState("All");
   const [unread,setUnread] = React.useState(3);
@@ -86,8 +84,7 @@ function AdminPortal({onLogout}) {
   const [,className,section,classCode,enrollment] = adminClasses[subject];
   const classLabel = className+" · "+section;
   const classWorkspace = adminClassTabs.includes(page);
-  const activeNav = classWorkspace || ["Upload material","New assessment","Assessment questions","Material preview"].includes(page) ? "Classes" : ["Exam Monitor","Attendance"].includes(page) ? "Home" : page;
-  const totals = [["Present","P",27,5,"present"],["Late","L",2,2,"late"],["Absent","A",1,1,"absent"]].map(([label,value,total,sample,color])=>[label,total-sample+(allPresent&&value==="P"?22:0)+attendance.filter(item=>item===value).length,color]);
+  const activeNav = classWorkspace || ["Upload material","New assessment","Assessment questions","Material preview"].includes(page) ? "Classes" : page==="Exam Monitor" ? "Home" : page;
   const records = subject===0 && recordAssessment==="Midterm Examination" ? adminResults : [];
   const examTitle = "Midterm Examination - "+(closed?"Closed":"Active");
 
@@ -127,9 +124,6 @@ function AdminPortal({onLogout}) {
     setTimeout(()=>URL.revokeObjectURL(url),1000);
     setDialog(null);
   }
-  function updateAttendance(index,value) {
-    setAttendance(items=>items.map((item,i)=>index===i?value:item));
-  }
   function publishMaterial(event) {
     event.preventDefault();
     if(!file) {setStatus("Choose a PDF file first.");return;}
@@ -148,7 +142,6 @@ function AdminPortal({onLogout}) {
   const tabs = (items,active,choose) => <div className="admin-tabs">{items.map(item=>
     <AdminButton key={item} tone={item===active?"primary":""} aria-pressed={item===active} onClick={()=>choose(item)}>{item}</AdminButton>)}</div>;
   const back = (label,destination) => <AdminButton tone="admin-back" onClick={()=>go(destination)}>‹ {label}</AdminButton>;
-  const stats = <AdminStats values={totals}/>;
   const progress = <progress value="18" max="30" aria-label="Students who submitted"/>;
   const closeExam = <AdminButton tone="danger" disabled={closed} onClick={()=>open("Close examination")}>Force Close Exam</AdminButton>;
   const quickActions = [["Generate Access Code",()=>open("Generate access code")],["Upload Material",()=>{setFile(null);go("Upload material");}],["New Assessment",()=>go("New assessment")]];
@@ -164,16 +157,13 @@ function AdminPortal({onLogout}) {
     case "Home":
       content=<>
         <AdminCard className="admin-hero"><div><AdminLabel>Active Session</AdminLabel><h2>Pre-Calculus</h2><p><span>Section: STEM-A</span><span>Schedule: 10:00 AM - 11:30 AM</span></p></div></AdminCard>
-        <div className="admin-grid">
-          <div className="admin-stack">
-            <AdminCard className="admin-quick"><AdminLabel>Quick actions</AdminLabel><div>
-              {quickActions.map(([name,action])=><AdminButton key={name} onClick={action}><span><AdminIcon name={name}/></span>{name}</AdminButton>)}
-            </div></AdminCard>
-            <AdminCard className="admin-live"><AdminLabel>Live assessment status</AdminLabel><h2>{examTitle}</h2>{progress}<p>18 / 30 Students Submitted</p><div className="admin-buttons">
-              <AdminButton onClick={()=>go("Exam Monitor")}>Monitor students</AdminButton>{closeExam}
-            </div></AdminCard>
-          </div>
-          <AdminCard className="admin-attendance-summary"><AdminLabel>Today's attendance</AdminLabel><h2>Pre-Calculus · STEM-A</h2>{stats}<AdminButton tone="primary" onClick={()=>go("Attendance")}>Take attendance</AdminButton></AdminCard>
+        <div className="admin-stack">
+          <AdminCard className="admin-quick"><AdminLabel>Quick actions</AdminLabel><div>
+            {quickActions.map(([name,action])=><AdminButton key={name} onClick={action}><span><AdminIcon name={name}/></span>{name}</AdminButton>)}
+          </div></AdminCard>
+          <AdminCard className="admin-live"><AdminLabel>Live assessment status</AdminLabel><h2>{examTitle}</h2>{progress}<p>18 / 30 Students Submitted</p><div className="admin-buttons">
+            <AdminButton onClick={()=>go("Exam Monitor")}>Monitor students</AdminButton>{closeExam}
+          </div></AdminCard>
         </div>
       </>;
       break;
@@ -229,7 +219,7 @@ function AdminPortal({onLogout}) {
         <div className="admin-grid">
           <AdminCard><AdminLabel>System status</AdminLabel><h2>Offline &amp; Sync</h2><div className="admin-rows">
             {[["Local Storage","24.5 GB Free"],["Cloud Sync",synced?"Last synced: just now":"Last synced: 2 hours ago"],["Pending Sync",synced?"Up to date":"3 items waiting"]].map(([label,value])=><div className="admin-row admin-setting" key={label}><strong>{label}</strong><span>{value}</span></div>)}
-          </div><AdminButton tone="primary" onClick={()=>{setSynced(true);complete("Sync complete","Grades and attendance are up to date in this preview.");}}>Sync All</AdminButton></AdminCard>
+          </div><AdminButton tone="primary" onClick={()=>{setSynced(true);complete("Sync complete","Grades are up to date in this preview.");}}>Sync All</AdminButton></AdminCard>
           <AdminCard><AdminLabel>Security &amp; access</AdminLabel><h2>Account Settings</h2><div className="admin-rows">
             {profileSettings.map(([label,value])=><button className="admin-row admin-setting" key={label} onClick={()=>open(label)}><strong>{label}</strong><span>{value}</span></button>)}
           </div><AdminButton tone="danger filled admin-desktop-logout" onClick={()=>open("Confirm logout")}>Logout</AdminButton></AdminCard>
@@ -252,18 +242,6 @@ function AdminPortal({onLogout}) {
         </AdminCard>
       </div><div className="admin-mobile-only admin-center">{closeExam}</div></>;
       break;
-    case "Attendance": {
-      const markAll = <AdminButton tone="soft" onClick={()=>{setAllPresent(true);setAttendance(adminStudents.map(()=>"P"));}}>Mark all present</AdminButton>;
-      const save = <AdminButton tone="primary" onClick={()=>setStatus("Attendance saved in this preview.")}>Save Attendance</AdminButton>;
-      content=<>{back("Home","Home")}<div className="admin-grid admin-monitor">
-        <AdminCard><AdminLabel>Thursday, October 29, 2026</AdminLabel><h2>Pre-Calculus · STEM-A</h2><p>10:00 AM - 11:30 AM</p>{stats}<div className="admin-desktop-only admin-stack">{markAll}{save}</div></AdminCard>
-        <div className="admin-mobile-only">{markAll}</div>
-        <AdminCard><div className="admin-rows">{adminStudents.map((student,index)=><AdminStudent key={student.number} student={student}>
-          <div className="admin-row-actions admin-marks">{["P","L","A"].map((value,i)=><AdminButton key={value} tone={attendance[index]===value?["success","warning","danger filled"][i]:""} aria-label={["Present","Late","Absent"][i]+" for "+student.name} aria-pressed={attendance[index]===value} onClick={()=>updateAttendance(index,value)}>{value}</AdminButton>)}</div>
-        </AdminStudent>)}</div></AdminCard>
-      </div><div className="admin-mobile-only">{save}</div></>;
-      break;
-    }
     case "Notifications":
       content=<>
         <AdminCard className="admin-hero admin-updates"><div><AdminLabel>Your updates</AdminLabel><h2>Stay in the loop.</h2><p>You have {unread} unread notifications about your classes.</p></div></AdminCard>
